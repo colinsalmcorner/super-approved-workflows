@@ -1,0 +1,46 @@
+name: Build dotnet application
+
+on:
+  workflow_call:
+    inputs:
+      runs-on:
+        description: Platform to execute on
+        type: string
+        default: ubuntu-latest
+        
+      artifact-name:
+        description: Name of the artifact to deploy
+        type: string
+        default: drop
+      
+      environment-name:
+        description: Name of environment
+        type: string
+        required: true
+      
+      environment-url:
+        description: URL of environment
+        type: string
+        required: true
+    
+    secrets:
+      PASSWORD:
+        required: true
+
+jobs:
+  deploy:
+    name: Deploy app
+    
+    runs-on: ${{ inputs.runs-on }}
+    
+    environment:
+      name: ${{ parameters.environment-name }}
+      url: ${{ parameters.environment-url }}
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Work
+        run: echo "Artifact is ${{ parameters.artifact-name }}"
+      - name: Password
+        run: echo "Password is ${{ secrets.PASSWORD }}"
+      
