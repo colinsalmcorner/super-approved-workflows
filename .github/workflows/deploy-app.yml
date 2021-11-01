@@ -39,8 +39,13 @@ jobs:
     
     steps:
       - uses: actions/checkout@v2
-      - name: Work
-        run: echo "Artifact is ${{ inputs.artifact-name }}"
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: ${{ inputs.artifact-name }}
+
+      - name: Display structure of downloaded files
+        run: ls -R
+
       - name: Password
         run: echo "Password is ${{ secrets.PASSWORD }}"
-      
